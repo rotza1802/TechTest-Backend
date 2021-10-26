@@ -1,10 +1,6 @@
 const { User } = require("../models");
 const axios = require("axios");
-const express = require("express");
-const app = express();
 const request = require("request");
-const { METHODS } = require("http");
-const requestIp = require("request-ip");
 
 var client_id = "0097a38d5d804ca6994536cead66b673";
 var client_secret = "16d0a29c85fe44e3a4372d5fc4da469e";
