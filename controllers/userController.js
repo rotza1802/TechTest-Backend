@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const request = require("request");
 const { METHODS } = require("http");
+const requestIp = require("request-ip");
 
 var client_id = "0097a38d5d804ca6994536cead66b673";
 var client_secret = "16d0a29c85fe44e3a4372d5fc4da469e";
@@ -27,7 +28,6 @@ function refreshToken() {
   request.post(authOptions, function (error, response, body) {
     if (!error && response.statusCode === 200) {
       token = body.access_token;
-      console.log(token);
     }
   });
 }
@@ -47,7 +47,6 @@ module.exports = {
         }
       );
       artistId = response.data.artists.items[0].id;
-      console.log(artistId);
 
       const albums = await axios.get(
         `https://api.spotify.com/v1/artists/${artistId}/albums`,
@@ -57,7 +56,14 @@ module.exports = {
           },
         }
       );
-      console.log(albums.data);
+      var ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+      var today = new Date(Date.now());
+      const user = await User.create({
+        IP: ip,
+        date: today.toISOString(),
+        artistName: req.params.name,
+      });
+      await user.save();
       res.status(200).json(albums.data);
     } catch (err) {
       res.status(500).json({ message: err });
