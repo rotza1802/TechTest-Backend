@@ -1,6 +1,6 @@
 # SetUp
 
-- Download repo [here](https://github.com/rotza1802/TechTest-Backend.git)
+- Link repo [here](https://github.com/rotza1802/TechTest-Backend.git)
 
 ## Run App
 
